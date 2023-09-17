@@ -16,10 +16,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="D4Z-3D-h5z">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCellConstraints" id="D4Z-3D-h5z">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="D4Z-3D-h5z" id="S2q-4D-Syt">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drc-4e-ouX">
+                                            <rect key="frame" x="20" y="11" width="42" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAo-od-gdP">
+                                            <rect key="frame" x="72" y="11" width="322" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="WAo-od-gdP" firstAttribute="leading" secondItem="drc-4e-ouX" secondAttribute="trailing" constant="10" id="P4y-wo-zoS"/>
+                                        <constraint firstItem="WAo-od-gdP" firstAttribute="top" secondItem="S2q-4D-Syt" secondAttribute="topMargin" id="RWL-0y-oyy"/>
+                                        <constraint firstItem="drc-4e-ouX" firstAttribute="centerY" secondItem="S2q-4D-Syt" secondAttribute="centerY" id="Vmt-ut-Xbb"/>
+                                        <constraint firstItem="WAo-od-gdP" firstAttribute="bottom" secondItem="S2q-4D-Syt" secondAttribute="bottomMargin" id="bpW-b8-P0b"/>
+                                        <constraint firstItem="drc-4e-ouX" firstAttribute="leading" secondItem="S2q-4D-Syt" secondAttribute="leadingMargin" id="dpa-Bb-X37"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="WAo-od-gdP" secondAttribute="trailing" id="flw-75-kRM"/>
+                                        <constraint firstItem="drc-4e-ouX" firstAttribute="bottom" secondItem="S2q-4D-Syt" secondAttribute="bottomMargin" id="qi1-2u-NEd"/>
+                                        <constraint firstItem="drc-4e-ouX" firstAttribute="top" secondItem="S2q-4D-Syt" secondAttribute="topMargin" id="xoG-f9-1EH"/>
+                                        <constraint firstItem="WAo-od-gdP" firstAttribute="centerY" secondItem="S2q-4D-Syt" secondAttribute="centerY" id="zjF-Kh-G7l"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FBb-nM-BJR">
+                                <rect key="frame" x="0.0" y="88" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FBb-nM-BJR" id="vXC-bw-djI">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
