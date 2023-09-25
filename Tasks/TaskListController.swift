@@ -142,11 +142,45 @@ class TaskListController: UITableViewController {
             self.tasks[taskType]?[indexPath.row].status = .planned
             self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         }
+        let actionSwipeEdit = UIContextualAction(style: .normal, title: "Изменить") { _, _, _ in
+            let editScreen = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TaskEditController") as! TaskEditController
+            editScreen.taskText = self.tasks[taskType]![indexPath.row].title
+            editScreen.taskType = self.tasks[taskType]![indexPath.row].type
+            editScreen.taskStatus = self.tasks[taskType]![indexPath.row].status
+            
+            editScreen.doAfterEdit = { [unowned self] title, type, status in
+                let editedTask = Task(title: title, type: type, status: status)
+                tasks[taskType]![indexPath.row] = editedTask
+                tableView.reloadData()
+            }
+            
+            self.navigationController?.pushViewController(editScreen, animated: true)
+        }
+        actionSwipeEdit.backgroundColor = .green
         
-        return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
+        let actionsConfiguration: UISwipeActionsConfiguration
+        if tasks[taskType]![indexPath.row].status == .completed {
+            actionsConfiguration = UISwipeActionsConfiguration(actions: [actionSwipeInstance, actionSwipeEdit])
+        } else {
+            actionsConfiguration = UISwipeActionsConfiguration(actions: [actionSwipeEdit])
+        }
+        
+        return actionsConfiguration
     }
     
     // MARK: - Private functions
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toCreateScreen" {
+            let destination = segue.destination as! TaskEditController
+            destination.doAfterEdit = { [unowned self] title, type, status in
+                let newTask = Task(title: title, type: type, status: status)
+                tasks[type]?.append(newTask)
+                tableView.reloadData()
+            }
+            
+        }
+    }
     
     private func getConfigureTaskCellConstraints(for indexPath: IndexPath) -> UITableViewCell {
         
