@@ -21,6 +21,4 @@ class TaskStorage: TaskStorageProtocol {
     func saveTasks(_ tasks: [TaskProtocol]) {
         // TODO: Реализовать функциональность сохранения
     }
-    
-    
 }

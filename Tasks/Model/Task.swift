@@ -21,5 +21,4 @@ struct Task: TaskProtocol {
     var title: String
     var type: TaskPriority
     var status: TaskStatus
-    
 }

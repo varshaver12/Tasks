@@ -10,7 +10,17 @@ import UIKit
 class TaskListController: UITableViewController {
     
     let taskStorage: TaskStorageProtocol = TaskStorage()
-    var tasks: [TaskPriority:[TaskProtocol]] = [:]
+    var tasks: [TaskPriority:[TaskProtocol]] = [:] {
+        didSet {
+            for (taskGroupPriority, tasksGroup) in tasks {
+                tasks[taskGroupPriority] = tasksGroup.sorted(by: { task1, task2 in
+                    let task1Position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
+                    let task2Position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
+                    return task1Position < task2Position
+                })
+            }
+        }
+    }
     var sectionsTypesPosition: [TaskPriority] = [.important, .normal]
     var tasksStatusPosition: [TaskStatus] = [.planned, .completed]
 
@@ -49,13 +59,7 @@ class TaskListController: UITableViewController {
             tasks[task.type]?.append(task)
         }
         
-        for (taskGroupPriority, tasksGroup) in tasks {
-            tasks[taskGroupPriority] = tasksGroup.sorted(by: { task1, task2 in
-                let task1Position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
-                let task2Position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
-                return task1Position < task2Position
-            })
-        }
+        
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -66,6 +70,39 @@ class TaskListController: UITableViewController {
         case .normal:
             return "Текущие"
         }
+    }
+    // MARK: - Table view delegate
+    
+    // Обработка нажатия на строку таблицы
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else {
+            return
+        }
+        guard tasks[taskType]?[indexPath.row].status == .planned else {
+            // Снимаем выделение
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        tasks[taskType]?[indexPath.row].status = .completed
+        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else {
+            return nil
+        }
+        guard tasks[taskType]?[indexPath.row].status == .completed else {
+            return nil
+        }
+        let actionSwipeInstance = UIContextualAction(style: .normal, title: "Не выполнена") { _, _, _ in
+            self.tasks[taskType]?[indexPath.row].status = .planned
+            self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
     }
     
     // MARK: Private functions
