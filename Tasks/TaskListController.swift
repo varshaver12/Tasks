@@ -28,6 +28,7 @@ class TaskListController: UITableViewController {
         super.viewDidLoad()
 
         loadTasks()
+        navigationItem.leftBarButtonItem = editButtonItem
     }
 
     // MARK: - Table view data source
@@ -71,6 +72,19 @@ class TaskListController: UITableViewController {
             return "Текущие"
         }
     }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    // Удаление
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let taskType = sectionsTypesPosition[indexPath.section]
+            tasks[taskType]?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     // MARK: - Table view delegate
     
     // Обработка нажатия на строку таблицы
@@ -105,7 +119,7 @@ class TaskListController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
     }
     
-    // MARK: Private functions
+    // MARK: - Private functions
     
     private func getConfigureTaskCellConstraints(for indexPath: IndexPath) -> UITableViewCell {
         
